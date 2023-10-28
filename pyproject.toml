@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "iceberg-chart-scrapping"
+version = "0.1.0"
+description = "tool to make the website https://icebergcharts.com/ available as an api"
+authors = ["js-bruno <brunocebrsilva@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "core", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+selenium = "^4.13.0"
+webdriver-manager = "^4.0.1"
+python-dotenv = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+isort = "^5.12.0"
+ipdb = "^0.13.13"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
