@@ -1,4 +1,4 @@
-from src.core.use_case import GetAllCategories, GetAllCategoriesLinks
+from src.core.use_case import GetAllTopics, GetAllCategoriesLinks
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -18,13 +18,12 @@ def init_selenium() -> webdriver.Chrome:
 
 if __name__ == "__main__":
     browser = init_selenium()
-    get_all_categories_usecase = GetAllCategories(
+    get_all_categories_usecase = GetAllTopics(
         "https://icebergcharts.com/", browser
     )  # Chance to topic "get_all_topics_usecase"
     get_all_gategories_links_usecase = GetAllCategoriesLinks(browser)
     categories_url = get_all_categories_usecase.run()
     catego = []
-    print(categories_url)
     for topic in categories_url:
         teste = get_all_gategories_links_usecase.run(topic)
         print(teste)

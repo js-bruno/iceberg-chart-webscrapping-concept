@@ -1,12 +1,16 @@
 import time
+from urllib.parse import urlparse
 from selenium.webdriver import Chrome
 from bs4 import BeautifulSoup
 from src.core.domain.dto import CategoryEntryDTO, Iceberg
+
+from src.core.domain import load_settings
 
 
 class GetAllCategoriesLinks:
     def __init__(self, browser: Chrome):
         self._browser = browser
+        self._settings = load_settings()
 
     def run(self, categorie_url: str) -> list[CategoryEntryDTO]:
         page = self._load_beautiful_soup(categorie_url)
@@ -16,7 +20,9 @@ class GetAllCategoriesLinks:
             iceberg_urls = category.find_all("a")
             icebergs = []
             for iceberg in iceberg_urls:
-                icebergs.append(Iceberg(name=iceberg.text, url=iceberg["href"]))
+                complete_url = self._settings["ICEBERG_CHART_URL"] + iceberg["href"]
+                parsedUrl = urlparse(complete_url, "https")
+                icebergs.append(Iceberg(name=iceberg.text, url=parsedUrl.geturl()))
 
             category_dto = CategoryEntryDTO(name=category.h4, icebergs=icebergs)
             categorys.append(category_dto)
