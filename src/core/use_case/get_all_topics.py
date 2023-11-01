@@ -19,9 +19,9 @@ class GetAllTopics:
 
         topics_urls = []
         for a_tag in categories:
-            complete_url = self._settings["ICEBERG_CHART_URL"] + a_tag["href"]
-            parsedUrl = urlparse(complete_url, "https")
-            topics_urls.append(parsedUrl.geturl())
+            complete_url = "//" + self._settings["ICEBERG_CHART_URL"] + a_tag["href"]
+            parsed_url = urlparse(complete_url, "https")
+            topics_urls.append(parsed_url)
 
         return topics_urls
 

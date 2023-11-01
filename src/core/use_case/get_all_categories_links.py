@@ -19,12 +19,13 @@ class GetAllCategoriesLinks:
         for category in category_entrys:
             iceberg_urls = category.find_all("a")
             icebergs = []
-            for iceberg in iceberg_urls:
+            for i, iceberg in enumerate(iceberg_urls):
                 complete_url = self._settings["ICEBERG_CHART_URL"] + iceberg["href"]
                 parsedUrl = urlparse(complete_url, "https")
                 icebergs.append(Iceberg(name=iceberg.text, url=parsedUrl.geturl()))
+                print(i, f"Found Iceberg:{iceberg.text}")
 
-            category_dto = CategoryEntryDTO(name=category.h4, icebergs=icebergs)
+            category_dto = CategoryEntryDTO(name=category.h4.text, icebergs=icebergs)
             categorys.append(category_dto)
         return categorys
 

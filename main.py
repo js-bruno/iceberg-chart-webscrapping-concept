@@ -1,3 +1,4 @@
+import pymongo
 from src.core.use_case import GetAllTopics, GetAllCategoriesLinks
 
 from selenium import webdriver
@@ -18,13 +19,20 @@ def init_selenium() -> webdriver.Chrome:
 
 if __name__ == "__main__":
     browser = init_selenium()
-    get_all_categories_usecase = GetAllTopics(
+    get_all_topics_links_usecase = GetAllTopics(
         "https://icebergcharts.com/", browser
     )  # Chance to topic "get_all_topics_usecase"
     get_all_gategories_links_usecase = GetAllCategoriesLinks(browser)
-    categories_url = get_all_categories_usecase.run()
-    catego = []
-    for topic in categories_url:
-        teste = get_all_gategories_links_usecase.run(topic)
-        print(teste)
-    print(catego)
+
+    topics_urls = get_all_topics_links_usecase.run()
+    # topics = []
+
+    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+    iceberg_db = myclient["iceberg"]
+    category_col = iceberg_db["categories"]
+
+    for topic in topics_urls:
+        categories = get_all_gategories_links_usecase.run(topic.geturl())
+        for categorie in categories:
+            id_line = category_col.insert_one(categorie.dict())
+            print(f"(id:{id_line})INSERTED CATEGORIE: {categorie.name}")
