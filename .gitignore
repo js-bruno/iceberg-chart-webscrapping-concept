@@ -1,5 +1,8 @@
 # Byte-compiled / optimized / DLL files
 poetry.lock
+.env
+
+
 __pycache__/
 *.py[cod]
 *$py.class
