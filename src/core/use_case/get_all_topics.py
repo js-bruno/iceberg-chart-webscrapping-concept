@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from selenium.webdriver import Chrome
 
 from src.core.domain import load_settings
-from src.core.utils import format_url
 
 
 class GetAllTopics:
@@ -26,7 +25,7 @@ class GetAllTopics:
             yield parsed_url
 
     def _load_beautiful_soup(self) -> BeautifulSoup:
-        self._browser.get(format_url(self._settings["ICEBERG_CHART_URL"]))
+        self._browser.get("https://" + self._settings["ICEBERG_CHART_URL"] + "/")
         time.sleep(2)
         page_source = self._browser.page_source
         return BeautifulSoup(page_source, "html.parser")
