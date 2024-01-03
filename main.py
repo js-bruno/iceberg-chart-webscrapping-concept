@@ -34,8 +34,8 @@ def run():
     get_all_gategories_links_usecase = GetAllCategoriesLinks(browser)
 
     topics_urls = get_all_topics_links_usecase.run()
-
     myclient = pymongo.MongoClient(os.getenv("MONGO_URL"))
+
     iceberg_db = myclient["iceberg"]
     category_col = iceberg_db["categories"]
 
